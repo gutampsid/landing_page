@@ -1,3 +1,4 @@
+-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,6 +22,9 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         h1 {
@@ -85,6 +89,20 @@
 
             .social-links a {
                 margin-bottom: 20px;
+            }
+
+            /* Mengatur ukuran gambar GIF untuk mode potret */
+            .gif-container {
+                width: 100%;
+                max-width: 300px; /* Sesuaikan ukuran maksimum dengan kebutuhan */
+            }
+        }
+
+        /* Media query untuk desktop */
+        @media (min-width: 769px) {
+            .gif-container {
+                width: 100%;
+                max-width: 480px; /* Sesuaikan ukuran maksimum dengan kebutuhan */
             }
         }
     </style>
