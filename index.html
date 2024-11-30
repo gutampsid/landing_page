@@ -1,4 +1,3 @@
--
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,66 +7,77 @@
     <title>Landing Page</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f8f8f8;
-            background-image: url('https://wallpaperaccess.com/full/2641074.gif'); /* Ganti dengan URL gambar yang diinginkan */
+            background-image: url('https://wallpaperaccess.com/full/2641074.gif');
             background-size: cover;
             background-position: center;
             animation: backgroundAnimation 30s infinite alternate;
+            color: #fff;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 50px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
         h1 {
             font-size: 48px;
             color: #da19d3;
-            text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            margin: 10px 0 30px;
+            line-height: 1.6;
         }
 
         .social-links {
             display: flex;
             justify-content: center;
-            margin-bottom: 50px;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
         }
 
         .social-links a {
             display: inline-block;
-            margin-right: 20px;
-            text-decoration: none;
-        }
-
-        .social-links img {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            transition: transform 0.3s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s, transform 0.3s;
         }
 
-        .social-links img:hover {
+        .social-links a img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .social-links a:hover {
+            background: #da19d3;
             transform: scale(1.2);
         }
 
-        .social-links img[title] {
-            cursor: pointer;
-        }
-
         footer {
-            text-align: center;
-            margin-top: 50px;
-            color: #da19d3;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #ddd;
         }
 
-        /* Keyframes untuk animasi background */
         @keyframes backgroundAnimation {
             0% {
                 background-position: 0% 50%;
@@ -77,32 +87,17 @@
             }
         }
 
-        /* Media query untuk perangkat seluler */
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
             }
 
             .social-links {
-                flex-wrap: wrap;
+                gap: 15px;
             }
 
-            .social-links a {
-                margin-bottom: 20px;
-            }
-
-            /* Mengatur ukuran gambar GIF untuk mode potret */
-            .gif-container {
-                width: 100%;
-                max-width: 300px; /* Sesuaikan ukuran maksimum dengan kebutuhan */
-            }
-        }
-
-        /* Media query untuk desktop */
-        @media (min-width: 769px) {
-            .gif-container {
-                width: 100%;
-                max-width: 480px; /* Sesuaikan ukuran maksimum dengan kebutuhan */
+            h1 {
+                font-size: 36px;
             }
         }
     </style>
@@ -111,18 +106,19 @@
 <body>
     <div class="container">
         <h1>Welcome to My Landing Page</h1>
+        <p>Your one-stop destination for all things awesome. Connect with us on your favorite platform!</p>
         <div class="social-links">
-            <a href="https://discord.com/invite/gzTwBqG2xK" target="_blank">
-                <img src="https://i1.sndcdn.com/artworks-000257821133-b5jbag-t500x500.jpg" alt="Discord" title="Join our Discord server">
+            <a href="https://discord.com/invite/gzTwBqG2xK" target="_blank" title="Join our Discord server">
+                <img src="https://i1.sndcdn.com/artworks-000257821133-b5jbag-t500x500.jpg" alt="Discord">
             </a>
-            <a href="https://t.me/gutampsofficialx" target="_blank">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/1024px-Telegram_logo.svg.png" alt="Telegram" title="Join our Telegram group">
+            <a href="https://t.me/gutampsofficialx" target="_blank" title="Join our Telegram group">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/1024px-Telegram_logo.svg.png" alt="Telegram">
             </a>
-            <a href="https://www.gutampsofficial.com/" target="_blank">
-                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgownqVEsz4K4Nd0Vd9BTCx19-SJbmJXiZ7PGqJ3Tz7eFhFVodHH-HDGD-L1f3YNQ5bpgT6fbKVMKdc-A9yMbx4T00XcfsrYo-W31vvnHXJP2ZJD8Xn4tUlDKvy_OEEKcWeBlulde44bHAyESX16PkFYosKJRMWQxmVO4cYT5GL53AryPDlQn4er2Srgys/s320/Logo%20Youtube.png" alt="Website" title="Visit our Website">
+            <a href="https://www.gutampsofficial.com/" target="_blank" title="Visit our Website">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgownqVEsz4K4Nd0Vd9BTCx19-SJbmJXiZ7PGqJ3Tz7eFhFVodHH-HDGD-L1f3YNQ5bpgT6fbKVMKdc-A9yMbx4T00XcfsrYo-W31vvnHXJP2ZJD8Xn4tUlDKvy_OEEKcWeBlulde44bHAyESX16PkFYosKJRMWQxmVO4cYT5GL53AryPDlQn4er2Srgys/s320/Logo%20Youtube.png" alt="Website">
             </a>
-            <a href="https://github.com/gutampsid" target="_blank">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="Github" title="Visit our Github">
+            <a href="https://github.com/gutampsid" target="_blank" title="Visit our Github">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="Github">
             </a>
         </div>
     </div>
