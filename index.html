@@ -6,60 +6,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landing Page</title>
     <style>
-        body {
-            font-family: 'Poppins', Arial, sans-serif;
+        /* Reset dan pengaturan dasar */
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f8f8f8;
-            background-image: url('https://wallpaperaccess.com/full/2641074.gif');
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            background: url('https://wallpaperaccess.com/full/2641074.gif') no-repeat center center fixed;
             background-size: cover;
-            background-position: center;
-            animation: backgroundAnimation 30s infinite alternate;
             color: #fff;
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7); /* Menambahkan efek gelap transparan */
+            z-index: 1;
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 50px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            background: rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 800px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         h1 {
-            font-size: 48px;
-            color: #da19d3;
+            font-size: 2.5rem;
             margin-bottom: 20px;
+            color: #ff007a;
         }
 
         p {
-            font-size: 18px;
-            margin: 10px 0 30px;
-            line-height: 1.6;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.8;
+            color: #ddd;
         }
 
         .social-links {
             display: flex;
             justify-content: center;
             gap: 20px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
         }
 
         .social-links a {
-            display: inline-block;
             width: 60px;
             height: 60px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
+            background: linear-gradient(135deg, #ff007a, #5600ff);
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: background 0.3s, transform 0.3s;
+            border-radius: 50%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 0, 122, 0.4);
         }
 
         .social-links a img {
@@ -68,63 +84,71 @@
         }
 
         .social-links a:hover {
-            background: #da19d3;
             transform: scale(1.2);
+            box-shadow: 0 8px 20px rgba(255, 0, 122, 0.6);
         }
 
         footer {
-            margin-top: 30px;
-            font-size: 14px;
-            color: #ddd;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #bbb;
         }
 
-        @keyframes backgroundAnimation {
-            0% {
-                background-position: 0% 50%;
-            }
-            100% {
-                background-position: 100% 50%;
-            }
+        footer a {
+            color: #ff007a;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 20px;
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
             }
 
             .social-links {
                 gap: 15px;
             }
 
-            h1 {
-                font-size: 36px;
+            .social-links a {
+                width: 50px;
+                height: 50px;
+            }
+
+            .social-links a img {
+                width: 25px;
+                height: 25px;
             }
         }
     </style>
 </head>
 
 <body>
+    <div class="overlay"></div>
     <div class="container">
-        <h1>Welcome to My Landing Page</h1>
-        <p>Your one-stop destination for all things awesome. Connect with us on your favorite platform!</p>
+        <h1>Welcome to Our Page</h1>
+        <p>Connect with us through your favorite platforms and explore more of what we have to offer.</p>
         <div class="social-links">
-            <a href="https://discord.com/invite/gzTwBqG2xK" target="_blank" title="Join our Discord server">
+            <a href="https://discord.com/invite/gzTwBqG2xK" target="_blank" title="Discord">
                 <img src="https://i1.sndcdn.com/artworks-000257821133-b5jbag-t500x500.jpg" alt="Discord">
             </a>
-            <a href="https://t.me/gutampsofficialx" target="_blank" title="Join our Telegram group">
+            <a href="https://t.me/gutampsofficialx" target="_blank" title="Telegram">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/1024px-Telegram_logo.svg.png" alt="Telegram">
             </a>
-            <a href="https://www.gutampsofficial.com/" target="_blank" title="Visit our Website">
+            <a href="https://www.gutampsofficial.com/" target="_blank" title="Website">
                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgownqVEsz4K4Nd0Vd9BTCx19-SJbmJXiZ7PGqJ3Tz7eFhFVodHH-HDGD-L1f3YNQ5bpgT6fbKVMKdc-A9yMbx4T00XcfsrYo-W31vvnHXJP2ZJD8Xn4tUlDKvy_OEEKcWeBlulde44bHAyESX16PkFYosKJRMWQxmVO4cYT5GL53AryPDlQn4er2Srgys/s320/Logo%20Youtube.png" alt="Website">
             </a>
-            <a href="https://github.com/gutampsid" target="_blank" title="Visit our Github">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="Github">
+            <a href="https://github.com/gutampsid" target="_blank" title="GitHub">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub">
             </a>
         </div>
     </div>
-    <footer>
-        &copy; 2024 Gutamps. All rights reserved.
-    </footer>
 </body>
 
 </html>
