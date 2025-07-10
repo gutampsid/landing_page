@@ -191,3 +191,49 @@ body.light-mode .mode-button {
 body.light-mode p {
   color: #333;
 }
+
+@media (max-width: 768px) {
+  body {
+    display: block;
+    height: auto;
+    padding: 20px 10px;
+  }
+
+  .container {
+    margin-top: 40px;
+    padding: 20px;
+    border-radius: 15px;
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+
+  p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  .social-links {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .social-links a {
+    width: 55px;
+    height: 55px;
+  }
+
+  .social-links a img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .mode-button {
+    padding: 10px 20px;
+    font-size: 13px;
+    margin-top: 20px;
+  }
+}
+
