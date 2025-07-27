@@ -312,7 +312,7 @@ body.light-mode p {
 }
 
 .faq.open .faq-answer {
-  max-height: 200px;
+  max-height: 1000px;
   padding: 15px;
 }
 
