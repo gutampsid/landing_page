@@ -26,3 +26,12 @@ document.querySelectorAll('.social-links a').forEach(link => {
 window.addEventListener('load', () => {
   document.getElementById('preloader').style.display = 'none';
 });
+
+document.querySelectorAll('.faq-question').forEach(button => {
+  button.addEventListener('click', () => {
+    const faq = button.parentElement;
+    faq.classList.toggle('open');
+  });
+});
+
+
