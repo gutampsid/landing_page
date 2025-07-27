@@ -259,3 +259,62 @@ body.light-mode p {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+.faq-section {
+  margin-top: 60px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 20px;
+  text-align: left;
+}
+
+.faq-section h2 {
+  font-size: 2rem;
+  margin-bottom: 25px;
+  text-align: center;
+  background: linear-gradient(90deg, #ff007a, #9b30ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: glowText 2s ease-in-out infinite alternate;
+}
+
+.faq {
+  margin-bottom: 15px;
+}
+
+.faq-question {
+  width: 100%;
+  padding: 15px;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.3s ease;
+}
+
+.faq-question:hover {
+  background-color: #333;
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  background-color: #111;
+  padding: 0 15px;
+  border-radius: 0 0 8px 8px;
+  color: #ddd;
+}
+
+.faq.open .faq-answer {
+  max-height: 200px;
+  padding: 15px;
+}
+
+
+
