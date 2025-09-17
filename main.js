@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!confirm(`Open ${title}?`)) e.preventDefault();
         return;
       }
-
       e.preventDefault();
       pendingLink = link.href;
       const title = (link.title || link.textContent || link.getAttribute('aria-label') || 'this link').trim();
@@ -54,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     pendingLink = null;
   }
 
-  // --- FAQ accordion responsive (tanpa max-height) ---
+  // --- FAQ accordion responsive ---
   document.querySelectorAll('.faq-question').forEach(button => {
     const faq = button.parentElement;
     const answer = faq ? faq.querySelector('.faq-answer') : null;
