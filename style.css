@@ -170,14 +170,19 @@ header p {
 }
 
 .faq-answer {
-  max-height: 0;
-  overflow: hidden;
-  padding: 0 14px;
+  height: auto;       /* biarkan tinggi mengikuti konten */
+  opacity: 0;         /* mulai tersembunyi */
+  padding: 0 14px;    /* padding kecil saat tertutup */
   background: #181818;
   color: #ccc;
-  font-size: 0.85rem; /* lebih kecil agar muat di ponsel */
-  line-height: 1.4;   /* rapat agar muat lebih banyak teks */
-  transition: max-height 0.5s ease, padding 0.3s ease;
+  font-size: 0.9rem;  /* font standar agar muat */
+  line-height: 1.4;
+  transition: opacity 0.4s ease, padding 0.3s ease;
+}
+
+.faq.open .faq-answer {
+  opacity: 1;
+  padding: 14px;      /* padding normal saat terbuka */
 }
 
 /* Footer */
