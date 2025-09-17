@@ -80,11 +80,11 @@ header p {
 .stat-number {
   font-size: 1.8rem;
   font-weight: bold;
-  color: #fff; /* putih solid */
+  color: #fff;
   text-shadow: 
     0 0 10px #9b30ff,
     0 0 20px #ff007a,
-    0 0 30px #9b30ff; /* glow ungu-pink */
+    0 0 30px #9b30ff;
   display: block;
 }
 
@@ -172,16 +172,16 @@ header p {
 .faq-answer {
   max-height: 0;
   overflow: hidden;
-  padding: 0 14px; /* padding kecil saat tertutup */
+  padding: 0 14px;
   background: #181818;
   color: #ccc;
   font-size: 0.95rem;
   line-height: 1.5;
-  transition: max-height 0.4s ease, padding 0.3s ease;
+  transition: max-height 0.5s ease, padding 0.4s ease;
 }
 
 .faq.open .faq-answer {
-  max-height: 500px; /* cukup besar agar muat teks */
+  max-height: 2000px; /* cukup besar untuk semua teks */
   padding: 14px; /* padding normal saat terbuka */
 }
 
@@ -222,9 +222,9 @@ h1, h2 {
   font-size: 3rem;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #fff; /* putih solid */
+  color: #fff;
   text-shadow: 
     0 0 10px #9b30ff,
     0 0 20px #ff007a,
-    0 0 30px #9b30ff; /* glow ungu-pink */
+    0 0 30px #9b30ff;
 }
