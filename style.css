@@ -226,15 +226,6 @@ h1, h2 {
 .faq-answer {
   max-height: 0;
   overflow: hidden;
-  padding: 0 14px;
-  background: #181818;
-  color: #ccc;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  transition: max-height 0.4s ease, padding 0.3s ease;
+  transition: max-height 0.4s ease;
 }
 
-.faq.open .faq-answer {
-  max-height: 500px; /* cukup tinggi biar muat isi */
-  padding: 14px;
-}
