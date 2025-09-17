@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     pendingLink = null;
   }
 
-  // --- FAQ accordion ---
+  // --- FAQ accordion responsive ---
   document.querySelectorAll('.faq-question').forEach(button => {
     if (button.tagName.toLowerCase() === 'button' && !button.hasAttribute('type')) {
       button.setAttribute('type', 'button');
@@ -71,27 +71,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (answer) {
       answer.style.overflow = "hidden";
+      answer.style.maxHeight = "0px";
+      answer.style.transition = "max-height 0.5s ease, padding 0.3s ease";
+      answer.style.paddingTop = "0";
+      answer.style.paddingBottom = "0";
     }
 
     button.addEventListener('click', () => {
       if (!faq || !answer) return;
 
       if (faq.classList.contains('open')) {
+        // close
         answer.style.maxHeight = "0px";
+        answer.style.paddingTop = "0";
+        answer.style.paddingBottom = "0";
         faq.classList.remove('open');
         button.setAttribute('aria-expanded', 'false');
         answer.setAttribute('aria-hidden', 'true');
       } else {
+        // close others
         document.querySelectorAll('.faq.open').forEach(openFaq => {
           const openAnswer = openFaq.querySelector('.faq-answer');
           const openBtn = openFaq.querySelector('.faq-question');
-          if (openAnswer) openAnswer.style.maxHeight = "0px";
+          if (openAnswer) {
+            openAnswer.style.maxHeight = "0px";
+            openAnswer.style.paddingTop = "0";
+            openAnswer.style.paddingBottom = "0";
+          }
           openFaq.classList.remove('open');
           if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
           if (openAnswer) openAnswer.setAttribute('aria-hidden', 'true');
         });
 
-        answer.style.maxHeight = "2000px"; // cukup besar untuk semua teks
+        // open this one dynamically
+        answer.style.maxHeight = answer.scrollHeight + "px";
+        answer.style.paddingTop = "14px";
+        answer.style.paddingBottom = "14px";
         faq.classList.add('open');
         button.setAttribute('aria-expanded', 'true');
         answer.setAttribute('aria-hidden', 'false');
