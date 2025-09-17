@@ -70,9 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const answer = faq ? faq.querySelector('.faq-answer') : null;
 
     if (answer) {
-      answer.style.height = "0px"; // default closed
+      answer.style.maxHeight = "0px"; // default closed
       answer.style.overflow = "hidden";
-      answer.style.transition = "height 0.3s ease";
+      answer.style.transition = "max-height 0.4s ease";
       answer.setAttribute('aria-hidden', 'true');
     }
 
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (faq.classList.contains('open')) {
         // close
-        answer.style.height = "0px";
+        answer.style.maxHeight = "0px";
         faq.classList.remove('open');
         button.setAttribute('aria-expanded', 'false');
         answer.setAttribute('aria-hidden', 'true');
@@ -90,20 +90,17 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.faq.open').forEach(openFaq => {
           const openAnswer = openFaq.querySelector('.faq-answer');
           const openBtn = openFaq.querySelector('.faq-question');
-          if (openAnswer) openAnswer.style.height = "0px";
+          if (openAnswer) openAnswer.style.maxHeight = "0px";
           openFaq.classList.remove('open');
           if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
           if (openAnswer) openAnswer.setAttribute('aria-hidden', 'true');
         });
 
         // open this one
-        answer.style.height = answer.scrollHeight + "px";
+        answer.style.maxHeight = "1000px"; // cukup besar agar semua teks terlihat
         faq.classList.add('open');
         button.setAttribute('aria-expanded', 'true');
         answer.setAttribute('aria-hidden', 'false');
-
-        // setelah animasi selesai, set height ke auto supaya dinamis
-        setTimeout(() => { if(faq.classList.contains('open')) answer.style.height = 'auto'; }, 300);
       }
     });
   });
