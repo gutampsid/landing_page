@@ -170,13 +170,13 @@ header p {
 }
 
 .faq-answer {
+  font-size: 0.85rem; /* sebelumnya 0.95rem */
+  line-height: 1.4;   /* sedikit lebih rapat agar muat */
   max-height: 0;
   overflow: hidden;
   padding: 0 14px;
   background: #181818;
   color: #ccc;
-  font-size: 0.95rem;
-  line-height: 1.5;
   transition: max-height 0.5s ease, padding 0.3s ease;
 }
 
