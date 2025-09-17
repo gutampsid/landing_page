@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!confirm(`Open ${title}?`)) e.preventDefault();
         return;
       }
-
       e.preventDefault();
       pendingLink = link.href;
       const title = (link.title || link.textContent || link.getAttribute('aria-label') || 'this link').trim();
@@ -45,14 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
       closeModal();
     });
   }
-  if (modal && modalCancel) {
-    modalCancel.addEventListener('click', closeModal);
-  }
-  if (modal) {
-    modal.addEventListener('click', ev => {
-      if (ev.target === modal) closeModal();
-    });
-  }
+  if (modal && modalCancel) modalCancel.addEventListener('click', closeModal);
+  if (modal) modal.addEventListener('click', ev => { if (ev.target === modal) closeModal(); });
   function closeModal() {
     if (!modal) return;
     modal.classList.remove('active');
@@ -64,22 +57,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (button.tagName.toLowerCase() === 'button' && !button.hasAttribute('type')) {
       button.setAttribute('type', 'button');
     }
-
     button.setAttribute('aria-expanded', 'false');
+
     const faq = button.parentElement;
     const answer = faq ? faq.querySelector('.faq-answer') : null;
+    if (!answer) return;
 
-    if (answer) {
-      answer.style.overflow = "hidden";
-      answer.style.maxHeight = "0px";
-      answer.style.transition = "max-height 0.5s ease, padding 0.3s ease";
-      answer.style.paddingTop = "0";
-      answer.style.paddingBottom = "0";
-    }
+    answer.style.overflow = "hidden";
+    answer.style.maxHeight = "0px";
+    answer.style.transition = "max-height 0.5s ease, padding 0.3s ease";
+    answer.style.paddingTop = "0";
+    answer.style.paddingBottom = "0";
 
     button.addEventListener('click', () => {
-      if (!faq || !answer) return;
-
       if (faq.classList.contains('open')) {
         // close
         answer.style.maxHeight = "0px";
@@ -93,14 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.faq.open').forEach(openFaq => {
           const openAnswer = openFaq.querySelector('.faq-answer');
           const openBtn = openFaq.querySelector('.faq-question');
-          if (openAnswer) {
-            openAnswer.style.maxHeight = "0px";
-            openAnswer.style.paddingTop = "0";
-            openAnswer.style.paddingBottom = "0";
-          }
+          if (openAnswer) { openAnswer.style.maxHeight = "0px"; openAnswer.style.paddingTop="0"; openAnswer.style.paddingBottom="0"; }
           openFaq.classList.remove('open');
-          if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
-          if (openAnswer) openAnswer.setAttribute('aria-hidden', 'true');
+          if (openBtn) openBtn.setAttribute('aria-expanded','false');
+          if (openAnswer) openAnswer.setAttribute('aria-hidden','true');
         });
 
         // open this one dynamically
@@ -124,8 +110,6 @@ function typeWriter(element, text, speed, callback) {
       element.innerHTML += text.charAt(i);
       i++;
       setTimeout(typing, speed);
-    } else if (callback) {
-      callback();
-    }
+    } else if (callback) callback();
   })();
 }
