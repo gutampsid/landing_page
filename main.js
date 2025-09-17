@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Body fade-in ---
   document.body.classList.add('fade-in');
 
-  // --- Typewriter ---
+  // --- Typewriter effect ---
   const h1 = document.querySelector('header h1');
   if (h1) typeWriter(h1, 'Welcome to Our Page', 80);
 
@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!confirm(`Open ${title}?`)) e.preventDefault();
         return;
       }
+
       e.preventDefault();
       pendingLink = link.href;
       const title = (link.title || link.textContent || link.getAttribute('aria-label') || 'this link').trim();
@@ -46,60 +47,54 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   if (modal && modalCancel) modalCancel.addEventListener('click', closeModal);
   if (modal) modal.addEventListener('click', ev => { if (ev.target === modal) closeModal(); });
+
   function closeModal() {
     if (!modal) return;
     modal.classList.remove('active');
     pendingLink = null;
   }
 
-  // --- FAQ accordion responsive ---
+  // --- FAQ accordion responsive (tanpa max-height) ---
   document.querySelectorAll('.faq-question').forEach(button => {
-    if (button.tagName.toLowerCase() === 'button' && !button.hasAttribute('type')) {
-      button.setAttribute('type', 'button');
-    }
-    button.setAttribute('aria-expanded', 'false');
-
     const faq = button.parentElement;
     const answer = faq ? faq.querySelector('.faq-answer') : null;
     if (!answer) return;
 
-    answer.style.overflow = "hidden";
-    answer.style.maxHeight = "0px";
-    answer.style.transition = "max-height 0.5s ease, padding 0.3s ease";
+    button.setAttribute('type', 'button');
+    button.setAttribute('aria-expanded', 'false');
+
+    answer.style.opacity = "0";
     answer.style.paddingTop = "0";
     answer.style.paddingBottom = "0";
+    answer.style.transition = "opacity 0.4s ease, padding 0.3s ease";
 
     button.addEventListener('click', () => {
-      if (faq.classList.contains('open')) {
-        // close
-        answer.style.maxHeight = "0px";
-        answer.style.paddingTop = "0";
-        answer.style.paddingBottom = "0";
-        faq.classList.remove('open');
-        button.setAttribute('aria-expanded', 'false');
-        answer.setAttribute('aria-hidden', 'true');
-      } else {
-        // close others
-        document.querySelectorAll('.faq.open').forEach(openFaq => {
-          const openAnswer = openFaq.querySelector('.faq-answer');
-          const openBtn = openFaq.querySelector('.faq-question');
-          if (openAnswer) { openAnswer.style.maxHeight = "0px"; openAnswer.style.paddingTop="0"; openAnswer.style.paddingBottom="0"; }
-          openFaq.classList.remove('open');
-          if (openBtn) openBtn.setAttribute('aria-expanded','false');
-          if (openAnswer) openAnswer.setAttribute('aria-hidden','true');
-        });
+      const isOpen = faq.classList.contains('open');
 
-        // open this one dynamically
-        answer.style.maxHeight = answer.scrollHeight + "px";
+      // close all others
+      document.querySelectorAll('.faq.open').forEach(openFaq => {
+        const openAnswer = openFaq.querySelector('.faq-answer');
+        const openBtn = openFaq.querySelector('.faq-question');
+        if (openAnswer) {
+          openAnswer.style.opacity = "0";
+          openAnswer.style.paddingTop = "0";
+          openAnswer.style.paddingBottom = "0";
+        }
+        openFaq.classList.remove('open');
+        if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
+      });
+
+      if (!isOpen) {
+        // open this one
+        answer.style.opacity = "1";
         answer.style.paddingTop = "14px";
         answer.style.paddingBottom = "14px";
         faq.classList.add('open');
         button.setAttribute('aria-expanded', 'true');
-        answer.setAttribute('aria-hidden', 'false');
       }
     });
   });
-}); // DOMContentLoaded
+});
 
 // --- Typewriter function ---
 function typeWriter(element, text, speed, callback) {
