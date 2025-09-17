@@ -163,19 +163,17 @@ header p {
 }
 
 .faq-answer {
-  max-height: 0;          /* mulai tertutup */
-  overflow: hidden;       /* biar ga tembus keluar */
+  height: auto;           /* otomatis mengikuti isi */
   opacity: 0;
-  padding: 0 14px;
+  padding: 0 14px;        /* padding kecil saat tertutup */
   background: #181818;
   color: #ccc;
   font-size: 0.9rem;
   line-height: 1.4;
-  transition: max-height 0.5s ease, opacity 0.4s ease, padding 0.3s ease;
+  transition: opacity 0.4s ease, padding 0.3s ease;
 }
 
 .faq.open .faq-answer {
-  max-height: 500px;      /* cukup besar biar muat teks */
   opacity: 1;
   padding: 14px;
 }
