@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // --- Preloader fade-out (jika ada) ---
+  // --- Preloader fade-out ---
   const preloader = document.getElementById('preloader');
   if (preloader) {
     preloader.style.transition = 'opacity 0.5s ease';
@@ -7,10 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => preloader.style.display = 'none', 500);
   }
 
-  // --- Body fade-in class ---
+  // --- Body fade-in ---
   document.body.classList.add('fade-in');
 
-  // --- Typewriter effect ---
+  // --- Typewriter ---
   const h1 = document.querySelector('header h1');
   if (h1) typeWriter(h1, 'Welcome to Our Page', 80);
 
@@ -70,23 +70,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const answer = faq ? faq.querySelector('.faq-answer') : null;
 
     if (answer) {
-      answer.style.maxHeight = "0px"; // default closed
       answer.style.overflow = "hidden";
-      answer.style.transition = "max-height 0.4s ease";
-      answer.setAttribute('aria-hidden', 'true');
     }
 
     button.addEventListener('click', () => {
       if (!faq || !answer) return;
 
       if (faq.classList.contains('open')) {
-        // close
         answer.style.maxHeight = "0px";
         faq.classList.remove('open');
         button.setAttribute('aria-expanded', 'false');
         answer.setAttribute('aria-hidden', 'true');
       } else {
-        // close others first
         document.querySelectorAll('.faq.open').forEach(openFaq => {
           const openAnswer = openFaq.querySelector('.faq-answer');
           const openBtn = openFaq.querySelector('.faq-question');
@@ -96,8 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (openAnswer) openAnswer.setAttribute('aria-hidden', 'true');
         });
 
-        // open this one
-        answer.style.maxHeight = "1000px"; // cukup besar agar semua teks terlihat
+        answer.style.maxHeight = "2000px"; // cukup besar untuk semua teks
         faq.classList.add('open');
         button.setAttribute('aria-expanded', 'true');
         answer.setAttribute('aria-hidden', 'false');
