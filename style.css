@@ -91,7 +91,7 @@ header p {
   color: #aaa;
 }
 
-/* CTA */
+/* CTA / Social Section */
 .social-section h2 {
   font-size: 1.6rem;
   margin-bottom: 10px;
@@ -106,18 +106,24 @@ header p {
 .cta {
   display: flex;
   justify-content: center;
+  align-items: stretch; /* sama tinggi */
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 20px;
 }
 
 .cta-button {
+  flex: 0 0 auto;       /* jangan melebar */
+  min-width: 120px;
+  max-width: 200px;
+  text-align: center;
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 8px;
   background: linear-gradient(135deg, #ff007a, #9b30ff);
   color: #fff;
   padding: 12px 20px;
-  border-radius: 8px;
+  border-radius: 12px;
   text-decoration: none;
   font-weight: bold;
   box-shadow: 0 0 20px rgba(154, 48, 255, 0.6);
@@ -128,6 +134,13 @@ header p {
   background: #7c1ae2;
   transform: scale(1.05);
   box-shadow: 0 0 30px rgba(154, 48, 255, 0.9);
+}
+
+.cta-button img,
+.cta-button svg {
+  max-width: 60px;
+  height: auto;
+  border-radius: 50%;
 }
 
 /* FAQ */
@@ -142,7 +155,6 @@ header p {
   margin-bottom: 12px;
   border: 1px solid #333;
   border-radius: 8px;
-  overflow: visible;    /* pastikan background bisa mengembang */
 }
 
 .faq-question {
@@ -163,17 +175,19 @@ header p {
 }
 
 .faq-answer {
-  height: auto;           /* otomatis mengikuti isi */
+  max-height: 0;
+  overflow: hidden;
   opacity: 0;
-  padding: 0 14px;        /* padding kecil saat tertutup */
+  padding: 0 14px;
   background: #181818;
   color: #ccc;
   font-size: 0.9rem;
   line-height: 1.4;
-  transition: opacity 0.4s ease, padding 0.3s ease;
+  transition: max-height 0.5s ease, opacity 0.4s ease, padding 0.3s ease;
 }
 
 .faq.open .faq-answer {
+  max-height: 500px; /* besar cukup untuk isi */
   opacity: 1;
   padding: 14px;
 }
@@ -203,6 +217,7 @@ header p {
   .cta-button {
     font-size: 0.9rem;
     padding: 10px 16px;
+    max-width: 150px;
   }
   .faq-question {
     font-size: 0.9rem;
