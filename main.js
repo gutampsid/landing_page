@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // --- Preloader fade-out ---
   const preloader = document.getElementById('preloader');
   if (preloader) {
     preloader.style.transition = 'opacity 0.5s ease';
@@ -7,14 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => preloader.style.display = 'none', 500);
   }
 
-  // --- Body fade-in ---
   document.body.classList.add('fade-in');
 
-  // --- Typewriter effect ---
   const h1 = document.querySelector('header h1');
   if (h1) typeWriter(h1, 'Welcome to Our Page', 80);
 
-  // --- Modal confirm ---
   const modal = document.getElementById('confirmModal');
   const modalMessage = document.getElementById('modalMessage');
   const modalYes = document.getElementById('modalYes');
@@ -53,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
     pendingLink = null;
   }
 
-  // --- FAQ accordion responsive ---
   document.querySelectorAll('.faq-question').forEach(button => {
     const faq = button.parentElement;
     const answer = faq ? faq.querySelector('.faq-answer') : null;
@@ -70,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
     button.addEventListener('click', () => {
       const isOpen = faq.classList.contains('open');
 
-      // close all others
       document.querySelectorAll('.faq.open').forEach(openFaq => {
         const openAnswer = openFaq.querySelector('.faq-answer');
         const openBtn = openFaq.querySelector('.faq-question');
@@ -84,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       if (!isOpen) {
-        // open this one
         answer.style.opacity = "1";
         answer.style.paddingTop = "14px";
         answer.style.paddingBottom = "14px";
@@ -95,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// --- Typewriter function ---
 function typeWriter(element, text, speed, callback) {
   let i = 0;
   element.innerHTML = "";
@@ -107,3 +99,42 @@ function typeWriter(element, text, speed, callback) {
     } else if (callback) callback();
   })();
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const cursorGlow = document.createElement('div');
+  cursorGlow.classList.add('cursor-glow');
+  document.body.appendChild(cursorGlow);
+
+  document.addEventListener('mousemove', (e) => {
+    cursorGlow.style.left = `${e.clientX}px`;
+    cursorGlow.style.top = `${e.clientY}px`;
+  });
+
+  const interactables = document.querySelectorAll('a, button, .faq-question, .cta-button');
+  interactables.forEach(el => {
+    el.addEventListener('mouseenter', () => cursorGlow.classList.add('active'));
+    el.addEventListener('mouseleave', () => cursorGlow.classList.remove('active'));
+  });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const counters = document.querySelectorAll('.stat-number');
+  const speed = 100;
+
+  counters.forEach(counter => {
+    const updateCount = () => {
+      const target = +counter.getAttribute('data-target');
+      const count = +counter.innerText.replace(/,/g, ''); 
+      const inc = target / speed;
+
+      if (count < target) {
+        counter.innerText = Math.ceil(count + inc).toLocaleString('en-US');
+        setTimeout(updateCount, 15);
+      } else {
+        counter.innerText = target.toLocaleString('en-US');
+      }
+    };
+    
+    updateCount();
+  });
+});
