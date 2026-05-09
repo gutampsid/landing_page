@@ -1,25 +1,22 @@
-/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Layout dasar */
 html, body {
   height: 100%;
   font-family: 'Poppins', Arial, sans-serif;
-  background: linear-gradient(-45deg, #000000, #1a1a1a, #6A0DAD, #000000);
+  background: linear-gradient(-45deg, #0a000a, #1a001a, #4d004d, #050005);
   background-size: 600% 600%;
   animation: backgroundShift 12s ease infinite;
   color: #eee;
   line-height: 1.6;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden; /* pastikan horizontal aman */
+  overflow-x: hidden;
 }
 
-/* Animasi background */
 @keyframes backgroundShift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -27,33 +24,33 @@ html, body {
 }
 
 main.container {
-  flex: none;          /* biarkan tinggi mengikuti konten */
+  flex: none;
   max-width: 900px;
   margin: 0 auto;
   padding: 40px 20px;
   text-align: center;
 }
 
-/* Section box transparan */
 .section-box {
-  background: rgba(26, 26, 26, 0.85);
+  background: rgba(40, 10, 40, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 0, 255, 0.15);
   padding: 30px 25px;
   margin: 30px 0;
   border-radius: 15px;
-  box-shadow: 0 0 20px rgba(154, 48, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(255, 0, 255, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: block;     /* pastikan block agar background mengembang */
-  min-height: 0;      /* biarkan mengikuti isi */
+  display: block;
+  min-height: 0;
 }
 
-/* Header */
 header p {
   font-size: 1rem;
-  color: #bbb;
+  color: #f0cce6;
   margin-bottom: 20px;
 }
 
-/* Statistik */
 .stats h2 {
   font-size: 1.6rem;
   margin-bottom: 20px;
@@ -68,11 +65,12 @@ header p {
 }
 
 .stat-item {
-  background: #1e1e1e;
+  background: #2b0b2b;
+  border: 1px solid rgba(255, 0, 255, 0.2);
   padding: 20px;
   border-radius: 12px;
   min-width: 120px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
 .stat-number {
@@ -80,18 +78,16 @@ header p {
   font-weight: bold;
   color: #fff;
   text-shadow: 
-    0 0 10px #9b30ff,
-    0 0 20px #ff007a,
-    0 0 30px #9b30ff;
+    0 0 10px #FF00FF,
+    0 0 20px #FF00FF;
   display: block;
 }
 
 .stat-label {
   font-size: 0.9rem;
-  color: #aaa;
+  color: #e0b3d6;
 }
 
-/* CTA / Social Section */
 .social-section h2 {
   font-size: 1.6rem;
   margin-bottom: 10px;
@@ -99,51 +95,72 @@ header p {
 }
 
 .social-section p {
-  color: #bbb;
+  color: #f0cce6;
   margin-bottom: 20px;
 }
 
 .cta {
   display: flex;
   justify-content: center;
-  align-items: stretch; /* sama tinggi */
+  align-items: stretch;
   flex-wrap: wrap;
   gap: 20px;
 }
 
 .cta-button {
-  flex: 0 0 auto;       /* jangan melebar */
+  flex: 0 0 auto;
   min-width: 120px;
   max-width: 200px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  background: linear-gradient(135deg, #ff007a, #9b30ff);
+  gap: 12px;
+  background: linear-gradient(135deg, #FF1493, #FF00FF, #C71585);
+  background-size: 200% 200%;
   color: #fff;
-  padding: 12px 20px;
-  border-radius: 12px;
+  padding: 15px 20px;
+  border-radius: 15px;
   text-decoration: none;
   font-weight: bold;
-  box-shadow: 0 0 20px rgba(154, 48, 255, 0.6);
-  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
+  transition: all 0.4s ease;
 }
 
 .cta-button:hover {
-  background: #7c1ae2;
-  transform: scale(1.05);
-  box-shadow: 0 0 30px rgba(154, 48, 255, 0.9);
+  background-position: 100% 50%;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(255, 0, 255, 0.8);
 }
 
 .cta-button img,
 .cta-button svg {
-  max-width: 60px;
-  height: auto;
+  width: 55px;
+  height: 55px;
+  padding: 10px;
   border-radius: 50%;
+  background: linear-gradient(135deg, #ffffff 0%, #e6e6e6 50%, #c4c4c4 100%);
+  border: 2px solid #ffffff;
+  box-shadow: 
+    0 6px 10px rgba(0, 0, 0, 0.6),
+    0 0 10px rgba(255, 255, 255, 0.4),
+    inset 2px 2px 5px rgba(255, 255, 255, 1),
+    inset -3px -3px 6px rgba(0, 0, 0, 0.3);
+  object-fit: contain;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* FAQ */
+.cta-button:hover img,
+.cta-button:hover svg {
+  transform: scale(1.15) rotate(8deg);
+  border-color: #FF00FF;
+  box-shadow: 
+    0 8px 15px rgba(0, 0, 0, 0.7),
+    0 0 20px #FF00FF,
+    inset 2px 2px 5px rgba(255, 255, 255, 1),
+    inset -3px -3px 6px rgba(0, 0, 0, 0.3);
+}
+
 .faq-section h2 {
   text-align: center;
   font-size: 1.6rem;
@@ -153,14 +170,15 @@ header p {
 
 .faq {
   margin-bottom: 12px;
-  border: 1px solid #333;
+  border: 1px solid rgba(255, 0, 255, 0.3);
   border-radius: 8px;
+  overflow: hidden;
 }
 
 .faq-question {
   width: 100%;
   padding: 14px;
-  background: #1e1e1e;
+  background: rgba(30, 5, 30, 0.8);
   color: #fff;
   border: none;
   text-align: left;
@@ -171,7 +189,7 @@ header p {
 }
 
 .faq-question:hover {
-  background: #2a2a2a;
+  background: rgba(60, 15, 60, 0.9);
 }
 
 .faq-answer {
@@ -179,52 +197,37 @@ header p {
   overflow: hidden;
   opacity: 0;
   padding: 0 14px;
-  background: #181818;
-  color: #ccc;
+  background: rgba(20, 0, 20, 0.9);
+  color: #e0b3d6;
   font-size: 0.9rem;
   line-height: 1.4;
   transition: max-height 0.5s ease, opacity 0.4s ease, padding 0.3s ease;
 }
 
 .faq.open .faq-answer {
-  max-height: 500px; /* besar cukup untuk isi */
+  max-height: 500px;
   opacity: 1;
   padding: 14px;
 }
 
-/* Footer */
 .footer {
   text-align: center;
   padding: 15px;
   font-size: 0.9rem;
-  color: #aaa;
-  background: #1a1a1a;
-  border-top: 1px solid #333;
+  color: #b38fb3;
+  background: rgba(10, 0, 10, 0.9);
+  border-top: 1px solid rgba(255, 0, 255, 0.2);
   margin-top: auto;
 }
 
-/* Responsif */
 @media (max-width: 768px) {
-  header h1 {
-    font-size: 2rem;
-  }
-  .stats-grid {
-    gap: 20px;
-  }
-  .stat-item {
-    padding: 15px;
-  }
-  .cta-button {
-    font-size: 0.9rem;
-    padding: 10px 16px;
-    max-width: 150px;
-  }
-  .faq-question {
-    font-size: 0.9rem;
-  }
+  header h1 { font-size: 2rem; }
+  .stats-grid { gap: 20px; }
+  .stat-item { padding: 15px; }
+  .cta-button { font-size: 0.9rem; padding: 10px 16px; max-width: 150px; }
+  .faq-question { font-size: 0.9rem; }
 }
 
-/* Judul Global */
 h1, h2 {
   font-family: 'Bangers', cursive;
   font-size: 3rem;
@@ -232,7 +235,42 @@ h1, h2 {
   text-transform: uppercase;
   color: #fff;
   text-shadow: 
-    0 0 10px #9b30ff,
-    0 0 20px #ff007a,
-    0 0 30px #9b30ff;
+    0 0 10px #FF00FF,
+    0 0 20px #FF00FF,
+    0 0 40px #FF1493;
+}
+
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, rgba(255, 0, 255, 0.8) 0%, rgba(255, 0, 255, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+  mix-blend-mode: screen;
+}
+
+.cursor-glow.active {
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(255, 20, 147, 0.9) 0%, rgba(255, 20, 147, 0) 70%);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0a000a; 
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #FF1493, #800080); 
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FF00FF; 
 }
