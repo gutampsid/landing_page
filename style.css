@@ -274,3 +274,117 @@ h1, h2 {
 ::-webkit-scrollbar-thumb:hover {
   background: #FF00FF; 
 }
+
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 10000; opacity: 0; visibility: hidden; transition: all 0.3s ease;
+}
+.modal-overlay.active {
+  opacity: 1; visibility: visible;
+}
+.modal-content {
+  background: #2b0b2b; padding: 25px; border-radius: 12px;
+  border: 1px solid #FF00FF; text-align: center;
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+}
+.modal-actions { margin-top: 20px; display: flex; gap: 15px; justify-content: center; }
+.modal-actions button {
+  padding: 8px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;
+}
+#modalCancel { background: #555; color: white; }
+#modalYes { background: #FF00FF; color: white; }
+
+@media (pointer: coarse) {
+  .cursor-glow {
+    display: none !important;
+  }
+}
+
+@keyframes neonFlicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    text-shadow: 0 0 10px #FF00FF, 0 0 20px #FF00FF, 0 0 40px #FF1493;
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+    opacity: 0.7;
+  }
+}
+
+/* Terapkan ke h1 */
+header h1 {
+  animation: neonFlicker 4s infinite;
+}
+
+/* Kelas dasar untuk elemen yang akan disembunyikan */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+
+/* Kelas saat elemen mulai terlihat di layar */
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 10px rgba(255, 0, 255, 0.2); border-color: rgba(255, 0, 255, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(255, 0, 255, 0.6); border-color: rgba(255, 0, 255, 0.8); }
+  100% { box-shadow: 0 0 10px rgba(255, 0, 255, 0.2); border-color: rgba(255, 0, 255, 0.2); }
+}
+
+.stat-item {
+  animation: pulseGlow 3s infinite alternate;
+}
+
+/* Efek Cyberpunk Glitch */
+header h1:hover {
+  animation: glitch-anim 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+  color: #fff;
+}
+
+@keyframes glitch-anim {
+  0% { transform: translate(0); text-shadow: 0 0 10px #FF00FF; }
+  20% { transform: translate(-2px, 2px); text-shadow: 3px 0px #00FFFF, -3px 0px #FF00FF; }
+  40% { transform: translate(-2px, -2px); text-shadow: 3px 0px #FF00FF, -3px 0px #00FFFF; }
+  60% { transform: translate(2px, 2px); text-shadow: -3px 0px #00FFFF, 3px 0px #FF00FF; }
+  80% { transform: translate(2px, -2px); text-shadow: -3px 0px #FF00FF, 3px 0px #00FFFF; }
+  100% { transform: translate(0); text-shadow: 0 0 10px #FF00FF; }
+}
+
+@keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+/* OVERKILL 2: Holographic Hover Shimmer */
+.section-box, .stat-item {
+  position: relative;
+  overflow: hidden; /* Mencegah cahaya keluar dari kotak */
+}
+
+.section-box::before, .stat-item::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(
+    800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+    rgba(255, 255, 255, 0.08), 
+    transparent 40%
+  );
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.section-box:hover::before, .stat-item:hover::before {
+  opacity: 1;
+}
+
+/* Memastikan konten tetap di atas cahaya */
+.section-box > *, .stat-item > * {
+  position: relative;
+  z-index: 2;
+}
+
