@@ -9,9 +9,26 @@
   <link rel="icon" href="gtps.png" type="image/png">
   <title>Gutamps Official - Landing Page</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<canvas id="particle-network" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none;"></canvas>
+
+<div id="terminal-preloader" style="position: fixed; inset: 0; background: #050005; z-index: 99999; display: flex; flex-direction: column; justify-content: center; padding: 40px; font-family: monospace; color: #00FFFF; overflow: hidden; transition: opacity 0.8s ease;">
+  <div id="terminal-output" style="font-size: 1.2rem; line-height: 1.5; text-shadow: 0 0 8px #00FFFF;"></div>
+  <div class="blinking-cursor" style="width: 15px; height: 20px; background: #FF00FF; margin-top: 10px; animation: blink 0.8s infinite;"></div>
+</div>
+
+<div id="confirmModal" class="modal-overlay">
+  <div class="modal-content">
+    <p id="modalMessage">Open this link?</p>
+    <div class="modal-actions">
+      <button id="modalCancel">Cancel</button>
+      <button id="modalYes">Yes, Open</button>
+    </div>
+  </div>
+</div>
   <main class="container">
 
     <div class="section-box">
