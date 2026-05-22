@@ -117,7 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// GANTI DENGAN KODE INI
 document.addEventListener('DOMContentLoaded', () => {
   const counters = document.querySelectorAll('.stat-number');
   const speed = 100;
@@ -141,13 +140,13 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         
         updateCount();
-        observer.unobserve(counter); // Menghentikan pantauan setelah animasi selesai
+        observer.unobserve(counter); 
       }
     });
   };
 
   const observer = new IntersectionObserver(animateCounters, {
-    threshold: 0.5 // Animasi akan mulai saat elemen 50% terlihat di layar saat di-scroll
+    threshold: 0.5 
   });
 
   counters.forEach(counter => observer.observe(counter));
@@ -159,12 +158,11 @@ document.addEventListener('DOMContentLoaded', () => {
   buttons.forEach(btn => {
     btn.addEventListener('mousemove', (e) => {
       const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left; // Posisi x dalam elemen
-      const y = e.clientY - rect.top;  // Posisi y dalam elemen
+      const x = e.clientX - rect.left; 
+      const y = e.clientY - rect.top;  
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
       
-      // Hitung rotasi maksimal 15 derajat
       const rotateX = ((y - centerY) / centerY) * -15; 
       const rotateY = ((x - centerX) / centerX) * 15;
 
@@ -180,7 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Tambahkan class 'reveal' otomatis ke semua kotak bagian
   const sections = document.querySelectorAll('.section-box');
   sections.forEach(sec => sec.classList.add('reveal'));
 
@@ -188,19 +185,16 @@ document.addEventListener('DOMContentLoaded', () => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('active');
-        // Opsional: Hentikan observasi jika hanya ingin animasi diputar 1x
-        // revealObserver.unobserve(entry.target);
       }
     });
   }, {
-    threshold: 0.15 // Aktif saat 15% bagian elemen terlihat
+    threshold: 0.15
   });
 
   sections.forEach(sec => revealObserver.observe(sec));
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Array kombinasi Konami Code
   const konamiCode = [
     'ArrowUp', 'ArrowUp', 
     'ArrowDown', 'ArrowDown', 
@@ -210,32 +204,25 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
   let konamiPosition = 0;
 
-  // Dengarkan setiap tekanan tombol di keyboard
   document.addEventListener('keydown', (e) => {
-    // Cek apakah tombol yang ditekan sesuai urutan
     if (e.key === konamiCode[konamiPosition]) {
       konamiPosition++;
       
-      // Jika seluruh kombinasi berhasil ditekan
       if (konamiPosition === konamiCode.length) {
         unlockSecretMode();
-        konamiPosition = 0; // Reset posisi
+        konamiPosition = 0;
       }
     } else {
-      // Jika salah ketik, reset dari awal
       konamiPosition = 0;
     }
   });
 
-  // Fungsi yang dipanggil saat kode rahasia aktif
   function unlockSecretMode() {
     alert('🎮 SECRET UNLOCKED! Welcome to Gutamps Developer Mode!');
     
-    // Ubah tema website menjadi perpaduan warna neon hijau/biru (Matrix/Cyberpunk)
     document.body.style.transition = 'filter 2s ease';
     document.body.style.filter = 'hue-rotate(90deg) contrast(1.2) invert(10%)';
     
-    // Ubah judul sementara
     const title = document.querySelector('header h1');
     if (title) title.innerText = "GOD MODE ACTIVATED";
   }
@@ -261,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (lineIndex < bootSequence.length) {
       output.innerHTML += bootSequence[lineIndex] + "<br>";
       lineIndex++;
-      setTimeout(printLine, Math.random() * 300 + 200); // Waktu jeda acak agar realistis
+      setTimeout(printLine, Math.random() * 300 + 200);
     } else {
       setTimeout(() => {
         terminal.style.opacity = '0';
@@ -273,7 +260,6 @@ document.addEventListener('DOMContentLoaded', () => {
   printLine();
 });
 
-// OVERKILL: Sintesis Audio Bawaan Browser
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 let audioCtx;
 
@@ -283,7 +269,6 @@ function initAudio() {
   }
 }
 
-// Suara saat mouse masuk (Hover - High Pitch Beep)
 function playHoverSound() {
   if (!audioCtx) return;
   const osc = audioCtx.createOscillator();
@@ -291,7 +276,7 @@ function playHoverSound() {
   osc.type = 'sine';
   osc.frequency.setValueAtTime(800, audioCtx.currentTime); 
   osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.05);
-  gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); // Volume sangat rendah
+  gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
   gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
   osc.connect(gainNode);
   gainNode.connect(audioCtx.destination);
@@ -299,7 +284,6 @@ function playHoverSound() {
   osc.stop(audioCtx.currentTime + 0.1);
 }
 
-// Suara saat tombol diklik (Click - Bass Thud / Confirm)
 function playClickSound() {
   if (!audioCtx) return;
   const osc = audioCtx.createOscillator();
@@ -316,7 +300,6 @@ function playClickSound() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Browser butuh interaksi pertama pengguna untuk mengizinkan audio
   document.body.addEventListener('mousemove', initAudio, { once: true });
   document.body.addEventListener('touchstart', initAudio, { once: true });
 
@@ -327,7 +310,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// OVERKILL: Algoritma Jaring Partikel (Nexus)
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('particle-network');
   const ctx = canvas.getContext('2d');
@@ -361,7 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
     draw() {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-      ctx.fillStyle = '#FF00FF'; // Warna neon ungu
+      ctx.fillStyle = '#FF00FF';
       ctx.fill();
     }
     update() {
@@ -375,7 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function initParticles() {
     particlesArray = [];
-    let numberOfParticles = (canvas.height * canvas.width) / 15000; // Kepadatan partikel
+    let numberOfParticles = (canvas.height * canvas.width) / 15000;
     for (let i = 0; i < numberOfParticles; i++) {
       let size = (Math.random() * 2) + 1;
       let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
@@ -393,7 +375,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) + 
                        ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
         
-        // Garis penghubung antar partikel
         if (distance < (canvas.width / 10) * (canvas.height / 10)) {
           opacityValue = 1 - (distance / 20000);
           ctx.strokeStyle = 'rgba(255, 0, 255,' + opacityValue + ')';
@@ -404,11 +385,10 @@ document.addEventListener('DOMContentLoaded', () => {
           ctx.stroke();
         }
 
-        // Garis penghubung ke kursor mouse
         let mouseDistance = ((mouse.x - particlesArray[a].x) * (mouse.x - particlesArray[a].x)) + 
                             ((mouse.y - particlesArray[a].y) * (mouse.y - particlesArray[a].y));
         if (mouseDistance < 20000) {
-          ctx.strokeStyle = 'rgba(0, 255, 255,' + (1 - mouseDistance/20000) + ')'; // Warna cyan saat dekat mouse
+          ctx.strokeStyle = 'rgba(0, 255, 255,' + (1 - mouseDistance/20000) + ')';
           ctx.lineWidth = 1.5;
           ctx.beginPath();
           ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
@@ -432,17 +412,16 @@ document.addEventListener('DOMContentLoaded', () => {
   animate();
 });
 
-// OVERKILL 2: Hacker Text Decryption Effect
 document.addEventListener('DOMContentLoaded', () => {
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
-  const headings = document.querySelectorAll('h2'); // Terapkan ke semua H2
+  const headings = document.querySelectorAll('h2');
 
   const decryptObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         let iterations = 0;
         const target = entry.target;
-        // Simpan teks asli jika belum ada
+
         if (!target.dataset.value) target.dataset.value = target.innerText;
         
         const originalText = target.dataset.value;
@@ -459,29 +438,27 @@ document.addEventListener('DOMContentLoaded', () => {
           if (iterations >= originalText.length) {
             clearInterval(target.interval);
           }
-          iterations += 1 / 3; // Kecepatan dekripsi (semakin kecil, semakin lama)
+          iterations += 1 / 3;
         }, 30);
         
-        decryptObserver.unobserve(target); // Hanya putar sekali
+        decryptObserver.unobserve(target);
       }
     });
-  }, { threshold: 0.8 }); // Aktif saat 80% elemen terlihat
+  }, { threshold: 0.8 });
 
   headings.forEach(heading => decryptObserver.observe(heading));
 });
 
-// OVERKILL 2: Holographic Mouse Tracking
 document.addEventListener('DOMContentLoaded', () => {
   const cards = document.querySelectorAll('.section-box, .stat-item');
 
   cards.forEach(card => {
     card.addEventListener('mousemove', e => {
       const rect = card.getBoundingClientRect();
-      // Hitung posisi kursor relatif terhadap kotak
+
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       
-      // Kirim kordinat ke CSS Variables
       card.style.setProperty('--mouse-x', `${x}px`);
       card.style.setProperty('--mouse-y', `${y}px`);
     });
