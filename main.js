@@ -1,34 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const preloader = document.getElementById('preloader');
-  if (preloader) {
-    preloader.style.transition = 'opacity 0.5s ease';
-    preloader.style.opacity = '0';
-    setTimeout(() => preloader.style.display = 'none', 500);
-  }
-
-  document.body.classList.add('fade-in');
-
-  const h1 = document.querySelector('header h1');
-  if (h1) typeWriter(h1, 'Welcome to Our Page', 80);
-
+  // Modal Link Confirmation Handler
   const modal = document.getElementById('confirmModal');
   const modalMessage = document.getElementById('modalMessage');
   const modalYes = document.getElementById('modalYes');
   const modalCancel = document.getElementById('modalCancel');
   let pendingLink = null;
 
-  const socialSelectors = '.social-links a, .cta a, .cta-button, .cta a.cta-button';
-  document.querySelectorAll(socialSelectors).forEach(link => {
+  document.querySelectorAll('.cta a, .cta-button').forEach(link => {
     if (!link.href) return;
     link.addEventListener('click', e => {
-      if (!modal || !modalMessage || !modalYes || !modalCancel) {
-        const title = (link.title || link.textContent || link.getAttribute('aria-label') || 'this link').trim();
-        if (!confirm(`Open ${title}?`)) e.preventDefault();
-        return;
-      }
+      if (!modal || !modalMessage || !modalYes || !modalCancel) return;
       e.preventDefault();
       pendingLink = link.href;
-      const title = (link.title || link.textContent || link.getAttribute('aria-label') || 'this link').trim();
+      const title = (link.textContent || 'this link').trim();
       modalMessage.textContent = `Open ${title}?`;
       modal.classList.add('active');
     });
@@ -49,419 +33,64 @@ document.addEventListener('DOMContentLoaded', () => {
     pendingLink = null;
   }
 
+  // FAQ Accordion Handler
   document.querySelectorAll('.faq-question').forEach(button => {
     const faq = button.parentElement;
     const answer = faq ? faq.querySelector('.faq-answer') : null;
     if (!answer) return;
 
-    button.setAttribute('type', 'button');
-    button.setAttribute('aria-expanded', 'false');
-
-    answer.style.opacity = "0";
-    answer.style.paddingTop = "0";
-    answer.style.paddingBottom = "0";
-    answer.style.transition = "opacity 0.4s ease, padding 0.3s ease";
-
     button.addEventListener('click', () => {
       const isOpen = faq.classList.contains('open');
 
       document.querySelectorAll('.faq.open').forEach(openFaq => {
-        const openAnswer = openFaq.querySelector('.faq-answer');
-        const openBtn = openFaq.querySelector('.faq-question');
-        if (openAnswer) {
-          openAnswer.style.opacity = "0";
-          openAnswer.style.paddingTop = "0";
-          openAnswer.style.paddingBottom = "0";
-        }
         openFaq.classList.remove('open');
-        if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
       });
 
       if (!isOpen) {
-        answer.style.opacity = "1";
-        answer.style.paddingTop = "14px";
-        answer.style.paddingBottom = "14px";
         faq.classList.add('open');
-        button.setAttribute('aria-expanded', 'true');
       }
     });
   });
-});
 
-function typeWriter(element, text, speed, callback) {
-  let i = 0;
-  element.innerHTML = "";
-  (function typing() {
-    if (i < text.length) {
-      element.innerHTML += text.charAt(i);
-      i++;
-      setTimeout(typing, speed);
-    } else if (callback) callback();
-  })();
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const cursorGlow = document.createElement('div');
-  cursorGlow.classList.add('cursor-glow');
-  document.body.appendChild(cursorGlow);
-
-  document.addEventListener('mousemove', (e) => {
-    cursorGlow.style.left = `${e.clientX}px`;
-    cursorGlow.style.top = `${e.clientY}px`;
-  });
-
-  const interactables = document.querySelectorAll('a, button, .faq-question, .cta-button');
-  interactables.forEach(el => {
-    el.addEventListener('mouseenter', () => cursorGlow.classList.add('active'));
-    el.addEventListener('mouseleave', () => cursorGlow.classList.remove('active'));
-  });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
+  // Lightweight Counter Animation
   const counters = document.querySelectorAll('.stat-number');
-  const speed = 100;
-
   const animateCounters = (entries, observer) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const counter = entry.target;
         const target = +counter.getAttribute('data-target');
-        let count = +counter.innerText.replace(/,/g, ''); 
-        const inc = target / speed;
-
-        const updateCount = () => {
-          if (count < target) {
-            count += inc;
-            counter.innerText = Math.ceil(count).toLocaleString('en-US');
-            setTimeout(updateCount, 15);
-          } else {
-            counter.innerText = target.toLocaleString('en-US');
-          }
-        };
-        
-        updateCount();
-        observer.unobserve(counter); 
+        counter.innerText = target.toLocaleString('en-US');
+        observer.unobserve(counter);
       }
     });
   };
 
-  const observer = new IntersectionObserver(animateCounters, {
-    threshold: 0.5 
-  });
-
+  const observer = new IntersectionObserver(animateCounters, { threshold: 0.3 });
   counters.forEach(counter => observer.observe(counter));
-});
 
-document.addEventListener('DOMContentLoaded', () => {
-  const buttons = document.querySelectorAll('.cta-button, .stat-item');
-
-  buttons.forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left; 
-      const y = e.clientY - rect.top;  
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      
-      const rotateX = ((y - centerY) / centerY) * -15; 
-      const rotateY = ((x - centerX) / centerX) * 15;
-
-      btn.style.transition = 'transform 0.1s ease';
-      btn.style.transform = `perspective(1000px) scale(1.05) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    });
-
-    btn.addEventListener('mouseleave', () => {
-      btn.style.transition = 'transform 0.5s ease';
-      btn.style.transform = `perspective(1000px) scale(1) rotateX(0deg) rotateY(0deg)`;
-    });
-  });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  const sections = document.querySelectorAll('.section-box');
-  sections.forEach(sec => sec.classList.add('reveal'));
-
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-      }
-    });
-  }, {
-    threshold: 0.15
-  });
-
-  sections.forEach(sec => revealObserver.observe(sec));
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  const konamiCode = [
-    'ArrowUp', 'ArrowUp', 
-    'ArrowDown', 'ArrowDown', 
-    'ArrowLeft', 'ArrowRight', 
-    'ArrowLeft', 'ArrowRight', 
-    'b', 'a'
-  ];
-  let konamiPosition = 0;
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === konamiCode[konamiPosition]) {
-      konamiPosition++;
-      
-      if (konamiPosition === konamiCode.length) {
-        unlockSecretMode();
-        konamiPosition = 0;
-      }
-    } else {
-      konamiPosition = 0;
-    }
-  });
-
-  function unlockSecretMode() {
-    alert('🎮 SECRET UNLOCKED! Welcome to Gutamps Developer Mode!');
-    
-    document.body.style.transition = 'filter 2s ease';
-    document.body.style.filter = 'hue-rotate(90deg) contrast(1.2) invert(10%)';
-    
-    const title = document.querySelector('header h1');
-    if (title) title.innerText = "GOD MODE ACTIVATED";
-  }
-});
-
-document.addEventListener('DOMContentLoaded', () => {
+  // Minimal Terminal Preloader Boot Sequence
   const terminal = document.getElementById('terminal-preloader');
   const output = document.getElementById('terminal-output');
-  if (!terminal || !output) return;
+  if (terminal && output) {
+    const bootSequence = [
+      "INITIALIZING GUTAMPS KERNEL...",
+      "[OK] Loading Mobile Profile...",
+      "WELCOME TO GUTAMPS OFFICIAL."
+    ];
 
-  const bootSequence = [
-    "INITIALIZING GUTAMPS KERNEL...",
-    "[OK] Loading Core Modules...",
-    "[OK] Establishing Secure Connection to Discord...",
-    "[OK] Bypassing Mainframe Security...",
-    "Decrypting Payload: 100%",
-    "WELCOME TO GUTAMPS OFFICIAL."
-  ];
-
-  let lineIndex = 0;
-  
-  function printLine() {
-    if (lineIndex < bootSequence.length) {
-      output.innerHTML += bootSequence[lineIndex] + "<br>";
-      lineIndex++;
-      setTimeout(printLine, Math.random() * 300 + 200);
-    } else {
-      setTimeout(() => {
-        terminal.style.opacity = '0';
-        setTimeout(() => terminal.style.display = 'none', 800);
-      }, 1000);
-    }
-  }
-  
-  printLine();
-});
-
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-let audioCtx;
-
-function initAudio() {
-  if (!audioCtx) {
-    audioCtx = new AudioContext();
-  }
-}
-
-function playHoverSound() {
-  if (!audioCtx) return;
-  const osc = audioCtx.createOscillator();
-  const gainNode = audioCtx.createGain();
-  osc.type = 'sine';
-  osc.frequency.setValueAtTime(800, audioCtx.currentTime); 
-  osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.05);
-  gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
-  gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-  osc.connect(gainNode);
-  gainNode.connect(audioCtx.destination);
-  osc.start();
-  osc.stop(audioCtx.currentTime + 0.1);
-}
-
-function playClickSound() {
-  if (!audioCtx) return;
-  const osc = audioCtx.createOscillator();
-  const gainNode = audioCtx.createGain();
-  osc.type = 'square';
-  osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-  osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.1);
-  gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-  gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.2);
-  osc.connect(gainNode);
-  gainNode.connect(audioCtx.destination);
-  osc.start();
-  osc.stop(audioCtx.currentTime + 0.2);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.body.addEventListener('mousemove', initAudio, { once: true });
-  document.body.addEventListener('touchstart', initAudio, { once: true });
-
-  const buttons = document.querySelectorAll('.cta-button, .faq-question, button');
-  buttons.forEach(btn => {
-    btn.addEventListener('mouseenter', playHoverSound);
-    btn.addEventListener('click', playClickSound);
-  });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  const canvas = document.getElementById('particle-network');
-  const ctx = canvas.getContext('2d');
-  let particlesArray;
-
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  let mouse = { x: null, y: null, radius: 150 };
-
-  window.addEventListener('mousemove', (event) => {
-    mouse.x = event.x;
-    mouse.y = event.y;
-  });
-
-  window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    initParticles();
-  });
-
-  class Particle {
-    constructor(x, y, directionX, directionY, size, color) {
-      this.x = x;
-      this.y = y;
-      this.directionX = directionX;
-      this.directionY = directionY;
-      this.size = size;
-      this.color = color;
-    }
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-      ctx.fillStyle = '#FF00FF';
-      ctx.fill();
-    }
-    update() {
-      if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
-      if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
-      this.x += this.directionX;
-      this.y += this.directionY;
-      this.draw();
-    }
-  }
-
-  function initParticles() {
-    particlesArray = [];
-    let numberOfParticles = (canvas.height * canvas.width) / 15000;
-    for (let i = 0; i < numberOfParticles; i++) {
-      let size = (Math.random() * 2) + 1;
-      let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-      let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-      let directionX = (Math.random() * 2) - 1;
-      let directionY = (Math.random() * 2) - 1;
-      particlesArray.push(new Particle(x, y, directionX, directionY, size, '#FF00FF'));
-    }
-  }
-
-  function connectParticles() {
-    let opacityValue = 1;
-    for (let a = 0; a < particlesArray.length; a++) {
-      for (let b = a; b < particlesArray.length; b++) {
-        let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) + 
-                       ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
-        
-        if (distance < (canvas.width / 10) * (canvas.height / 10)) {
-          opacityValue = 1 - (distance / 20000);
-          ctx.strokeStyle = 'rgba(255, 0, 255,' + opacityValue + ')';
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-          ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-          ctx.stroke();
-        }
-
-        let mouseDistance = ((mouse.x - particlesArray[a].x) * (mouse.x - particlesArray[a].x)) + 
-                            ((mouse.y - particlesArray[a].y) * (mouse.y - particlesArray[a].y));
-        if (mouseDistance < 20000) {
-          ctx.strokeStyle = 'rgba(0, 255, 255,' + (1 - mouseDistance/20000) + ')';
-          ctx.lineWidth = 1.5;
-          ctx.beginPath();
-          ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-          ctx.lineTo(mouse.x, mouse.y);
-          ctx.stroke();
-        }
+    let lineIndex = 0;
+    function printLine() {
+      if (lineIndex < bootSequence.length) {
+        output.innerHTML += bootSequence[lineIndex] + "<br>";
+        lineIndex++;
+        setTimeout(printLine, 150);
+      } else {
+        setTimeout(() => {
+          terminal.style.opacity = '0';
+          setTimeout(() => terminal.style.display = 'none', 500);
+        }, 400);
       }
     }
+    printLine();
   }
-
-  function animate() {
-    requestAnimationFrame(animate);
-    ctx.clearRect(0, 0,innerWidth, innerHeight);
-    for (let i = 0; i < particlesArray.length; i++) {
-      particlesArray[i].update();
-    }
-    connectParticles();
-  }
-
-  initParticles();
-  animate();
 });
-
-document.addEventListener('DOMContentLoaded', () => {
-  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
-  const headings = document.querySelectorAll('h2');
-
-  const decryptObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        let iterations = 0;
-        const target = entry.target;
-
-        if (!target.dataset.value) target.dataset.value = target.innerText;
-        
-        const originalText = target.dataset.value;
-        clearInterval(target.interval);
-
-        target.interval = setInterval(() => {
-          target.innerText = originalText.split("")
-            .map((letter, index) => {
-              if (index < iterations) return originalText[index];
-              return letters[Math.floor(Math.random() * letters.length)];
-            })
-            .join("");
-
-          if (iterations >= originalText.length) {
-            clearInterval(target.interval);
-          }
-          iterations += 1 / 3;
-        }, 30);
-        
-        decryptObserver.unobserve(target);
-      }
-    });
-  }, { threshold: 0.8 });
-
-  headings.forEach(heading => decryptObserver.observe(heading));
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  const cards = document.querySelectorAll('.section-box, .stat-item');
-
-  cards.forEach(card => {
-    card.addEventListener('mousemove', e => {
-      const rect = card.getBoundingClientRect();
-
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
-    });
-  });
-});
-
