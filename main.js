@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Modal Link Confirmation Handler (dengan info domain & tombol Escape)
   const modal = document.getElementById('confirmModal');
   const modalMessage = document.getElementById('modalMessage');
   const modalDomain = document.getElementById('modalDomain');
@@ -8,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let pendingLink = null;
   let lastFocusedElement = null;
 
-  document.querySelectorAll('.cta a, .cta-button').forEach(link => {
+  document.querySelectorAll('.cta a, .cta-button, #wdJoinBtn').forEach(link => {
     if (!link.href) return;
     link.addEventListener('click', e => {
       if (!modal || !modalMessage || !modalYes || !modalCancel) return;
@@ -65,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 2. FAQ Accordion Handler (dengan sinkronisasi aria-expanded)
   document.querySelectorAll('.faq-question').forEach(button => {
     const faq = button.parentElement;
     const answer = faq ? faq.querySelector('.faq-answer') : null;
@@ -87,13 +85,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 3. Smooth Count-Up Animation untuk Statistik
   const counters = document.querySelectorAll('.stat-number');
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const animatedCounters = new WeakSet();
 
   function runCountUp(el, target, duration = 900) {
+    if (!el) return;
+    const numericTarget = Math.max(0, Number(target) || 0);
     if (prefersReducedMotion) {
-      el.textContent = target.toLocaleString('en-US');
+      el.textContent = numericTarget.toLocaleString('en-US');
       return;
     }
 
@@ -102,16 +102,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function update(currentTime) {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      // Ease-out cubic agar melambat halus di akhir
       const eased = 1 - Math.pow(1 - progress, 3);
-      const currentVal = Math.round(eased * target);
+      const currentVal = Math.round(eased * numericTarget);
 
       el.textContent = currentVal.toLocaleString('en-US');
 
       if (progress < 1) {
         requestAnimationFrame(update);
       } else {
-        el.textContent = target.toLocaleString('en-US');
+        el.textContent = numericTarget.toLocaleString('en-US');
       }
     }
 
@@ -123,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (entry.isIntersecting) {
         const counter = entry.target;
         const target = Number(counter.getAttribute('data-target')) || 0;
+        animatedCounters.add(counter);
         runCountUp(counter, target);
         observer.unobserve(counter);
       }
@@ -132,7 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const observer = new IntersectionObserver(animateCounters, { threshold: 0.3 });
   counters.forEach(counter => observer.observe(counter));
 
-  // 4. Winter Terminal Preloader (dengan tombol skip)
   const terminal = document.getElementById('terminal-preloader');
   const output = document.getElementById('terminal-output');
   const skipBtn = document.getElementById('skipPreloader');
@@ -177,7 +176,6 @@ document.addEventListener('DOMContentLoaded', () => {
     printLine();
   }
 
-  // 5. Partikel Salju Ringan (otomatis nonaktif jika reduced motion aktif)
   const snowLayer = document.querySelector('.snow-layer');
   if (snowLayer && !prefersReducedMotion) {
     const flakeCount = window.innerWidth < 600 ? 18 : 32;
@@ -203,14 +201,15 @@ document.addEventListener('DOMContentLoaded', () => {
       snowLayer.appendChild(flake);
     }
   }
-});
 
-// Custom Winter Discord Widget Renderer (ID: 1019852867659632750)
   const WINTER_GUILD_ID = '1019852867659632750';
   const wdServerNameEl = document.getElementById('wdServerName');
   const wdOnlinePillEl = document.getElementById('wdOnlinePill');
   const wdMembersListEl = document.getElementById('wdMembersList');
   const wdJoinBtnEl = document.getElementById('wdJoinBtn');
+  const statOnlineEl = document.getElementById('discordOnlineCount');
+  const updatedAtEl = document.getElementById('realtimeUpdatedAt');
+  const statusTextEl = document.getElementById('statusText');
 
   function createMemberRow(member) {
     const li = document.createElement('li');
@@ -255,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function renderWinterDiscordWidget() {
-    if (!wdMembersListEl) return;
+    if (!wdMembersListEl && !statOnlineEl) return;
 
     try {
       const res = await fetch(`https://discord.com/api/guilds/${WINTER_GUILD_ID}/widget.json`, {
@@ -273,10 +272,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (wdOnlinePillEl) {
           wdOnlinePillEl.textContent = `${data.presence_count.toLocaleString('en-US')} Members Online`;
         }
-        const statOnlineEl = document.getElementById('discordOnlineCount');
+
         if (statOnlineEl) {
           statOnlineEl.setAttribute('data-target', String(data.presence_count));
-          statOnlineEl.textContent = data.presence_count.toLocaleString('en-US');
+          if (animatedCounters.has(statOnlineEl)) {
+            statOnlineEl.textContent = data.presence_count.toLocaleString('en-US');
+          } else {
+            runCountUp(statOnlineEl, data.presence_count);
+            animatedCounters.add(statOnlineEl);
+          }
         }
       }
 
@@ -284,24 +288,43 @@ document.addEventListener('DOMContentLoaded', () => {
         wdJoinBtnEl.href = data.instant_invite;
       }
 
-      const members = Array.isArray(data.members) ? data.members : [];
-      wdMembersListEl.innerHTML = '';
-
-      if (members.length === 0) {
-        const emptyLi = document.createElement('li');
-        emptyLi.className = 'wd-empty';
-        emptyLi.textContent = 'Server is live, but individual member list is hidden.';
-        wdMembersListEl.appendChild(emptyLi);
-        return;
+      if (statusTextEl) {
+        statusTextEl.textContent = 'Live Discord Connected';
       }
 
-      const fragment = document.createDocumentFragment();
-      members.forEach(member => {
-        fragment.appendChild(createMemberRow(member));
-      });
-      wdMembersListEl.appendChild(fragment);
+      if (updatedAtEl) {
+        const nowTime = new Date().toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        });
+        updatedAtEl.textContent = `Updated realtime at ${nowTime} • Auto-refresh every 30s`;
+      }
+
+      if (wdMembersListEl) {
+        const members = Array.isArray(data.members) ? data.members : [];
+        wdMembersListEl.innerHTML = '';
+
+        if (members.length === 0) {
+          const emptyLi = document.createElement('li');
+          emptyLi.className = 'wd-empty';
+          emptyLi.textContent = 'Server is live, but individual member list is hidden.';
+          wdMembersListEl.appendChild(emptyLi);
+          return;
+        }
+
+        const fragment = document.createDocumentFragment();
+        members.forEach(member => {
+          fragment.appendChild(createMemberRow(member));
+        });
+        wdMembersListEl.appendChild(fragment);
+      }
     } catch {
       if (wdOnlinePillEl) wdOnlinePillEl.textContent = 'Live Sync Paused';
+      if (statusTextEl) statusTextEl.textContent = 'Fallback Mode';
+      if (updatedAtEl && !updatedAtEl.textContent.includes('Updated realtime')) {
+        updatedAtEl.textContent = 'Showing cached snapshot (live widget unavailable)';
+      }
       if (wdMembersListEl && !wdMembersListEl.children.length) {
         const errLi = document.createElement('li');
         errLi.className = 'wd-empty';
@@ -311,11 +334,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  if (wdMembersListEl) {
-    renderWinterDiscordWidget();
-    setInterval(() => {
-      if (!document.hidden) {
-        renderWinterDiscordWidget();
-      }
-    }, 30000);
-  }
+  renderWinterDiscordWidget();
+  setInterval(() => {
+    if (!document.hidden) {
+      renderWinterDiscordWidget();
+    }
+  }, 30000);
+
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      renderWinterDiscordWidget();
+    }
+  });
+});
