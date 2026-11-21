@@ -35,14 +35,12 @@ html, body {
   overflow-x: hidden;
 }
 
-/* Fokus keyboard yang jelas & ramah tema winter */
 a:focus-visible,
 button:focus-visible {
   outline: 2px solid var(--ice-bright);
   outline-offset: 3px;
 }
 
-/* Efek partikel salju halus */
 .snow-layer {
   position: fixed;
   inset: 0;
@@ -136,6 +134,40 @@ header p {
   color: #ffffff;
 }
 
+.stats-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.stats-header h2 {
+  margin-bottom: 0;
+}
+
+.live-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ice-bright);
+  background: rgba(14, 165, 233, 0.14);
+  border: 1px solid rgba(125, 211, 252, 0.35);
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
+  animation: pulseDot 1.8s infinite;
+}
+
 .stats-grid {
   display: flex;
   justify-content: center;
@@ -160,6 +192,13 @@ header p {
   border-color: var(--border-ice);
 }
 
+.stat-item-live {
+  border-color: rgba(56, 189, 248, 0.48);
+  box-shadow:
+    0 4px 16px rgba(56, 189, 248, 0.16),
+    inset 0 1px 0 rgba(186, 230, 253, 0.25);
+}
+
 .stat-number {
   font-size: 1.6rem;
   font-weight: bold;
@@ -173,6 +212,12 @@ header p {
   font-size: 0.85rem;
   color: var(--text-muted);
   margin-top: 2px;
+}
+
+.realtime-meta {
+  margin-top: 12px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
 }
 
 .social-section p {
@@ -322,7 +367,6 @@ h1 {
   font-size: 2.2rem;
 }
 
-/* Preloader Winter Terminal */
 .winter-preloader {
   position: fixed;
   inset: 0;
@@ -377,7 +421,6 @@ h1 {
   color: #ffffff;
 }
 
-/* Sembunyikan elemen kursor kustom di perangkat mobile/touch */
 .cursor-glow {
   display: none !important;
 }
@@ -451,18 +494,9 @@ h1 {
   50%, 100% { opacity: 0; }
 }
 
-/* Hormati preferensi reduced motion pengguna */
-@media (prefers-reduced-motion: reduce) {
-  .snow-layer,
-  .snowflake,
-  .winter-cursor,
-  .faq-answer,
-  .faq-icon,
-  .cta-button,
-  .stat-item {
-    animation: none !important;
-    transition: none !important;
-  }
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.55; }
 }
 
 .discord-live-section p {
@@ -482,13 +516,12 @@ h1 {
     inset 0 1px 0 rgba(224, 242, 254, 0.2);
 }
 
-/* Header biru es menggantikan warna ungu bawaan Discord */
 .wd-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 14px 16px;
+  gap: 10px;
+  padding: 12px 14px;
   background: linear-gradient(135deg, #0369a1 0%, #0284c7 55%, #0ea5e9 100%);
   border-bottom: 1px solid rgba(186, 230, 253, 0.35);
 }
@@ -496,8 +529,14 @@ h1 {
 .wd-brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
+  flex: 1 1 auto;
   min-width: 0;
+}
+
+.wd-brand > div {
+  min-width: 0;
+  flex: 1;
 }
 
 .wd-discord-badge {
@@ -515,7 +554,7 @@ h1 {
 
 .wd-server-name {
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   color: #ffffff;
   white-space: nowrap;
   overflow: hidden;
@@ -523,21 +562,24 @@ h1 {
 }
 
 .wd-sub {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: #e0f2fe;
-  opacity: 0.9;
+  opacity: 0.92;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .wd-online-pill {
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 600;
   color: #ffffff;
-  background: rgba(4, 15, 30, 0.35);
+  background: rgba(4, 15, 30, 0.42);
   border: 1px solid rgba(224, 242, 254, 0.35);
-  padding: 5px 10px;
+  padding: 4px 9px;
   border-radius: 999px;
   white-space: nowrap;
-  flex-shrink: 0;
+  flex: 0 0 auto;
 }
 
 .wd-section-label {
@@ -684,61 +726,6 @@ h1 {
   transform: translateY(-1px);
 }
 
-/* Header biru es - anti tumpang tindih di layar sempit */
-.wd-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 12px 14px;
-  background: linear-gradient(135deg, #0369a1 0%, #0284c7 55%, #0ea5e9 100%);
-  border-bottom: 1px solid rgba(186, 230, 253, 0.35);
-}
-
-.wd-brand {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-.wd-brand > div {
-  min-width: 0;
-  flex: 1;
-}
-
-.wd-server-name {
-  font-weight: 600;
-  font-size: 0.92rem;
-  color: #ffffff;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.wd-sub {
-  font-size: 0.7rem;
-  color: #e0f2fe;
-  opacity: 0.92;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.wd-online-pill {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: #ffffff;
-  background: rgba(4, 15, 30, 0.42);
-  border: 1px solid rgba(224, 242, 254, 0.35);
-  padding: 4px 9px;
-  border-radius: 999px;
-  white-space: nowrap;
-  flex: 0 0 auto;
-}
-
-/* Penyesuaian ekstra di layar ponsel kecil */
 @media (max-width: 480px) {
   .wd-header {
     flex-wrap: wrap;
@@ -758,5 +745,19 @@ h1 {
   .wd-activity {
     max-width: 42%;
     font-size: 0.7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .snow-layer,
+  .snowflake,
+  .winter-cursor,
+  .status-dot,
+  .faq-answer,
+  .faq-icon,
+  .cta-button,
+  .stat-item {
+    animation: none !important;
+    transition: none !important;
   }
 }
