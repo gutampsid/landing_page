@@ -57,11 +57,22 @@
     </div>
 
     <div class="section-box stats">
-      <h2>Our Community at a Glance</h2>
+      <div class="stats-header">
+        <h2>Our Community at a Glance</h2>
+        <span class="live-status-pill" id="communityStatus">
+          <span class="status-dot"></span>
+          <span id="statusText">Realtime Sync Active</span>
+        </span>
+      </div>
+
       <div class="stats-grid">
         <div class="stat-item">
           <span class="stat-number" data-target="80000">0</span>+
           <span class="stat-label">Members</span>
+        </div>
+        <div class="stat-item stat-item-live">
+          <span class="stat-number" id="discordOnlineCount" data-target="1904">0</span>
+          <span class="stat-label">Online Now</span>
         </div>
         <div class="stat-item">
           <span class="stat-number" data-target="12">0</span>+
@@ -72,6 +83,41 @@
           <span class="stat-label">Years Active</span>
         </div>
       </div>
+      <p class="realtime-meta" id="realtimeUpdatedAt">Syncing Discord live status...</p>
+    </div>
+
+    <div class="section-box discord-live-section">
+      <h2>Live Discord Server</h2>
+      <p>See who is online right now in our winter community server.</p>
+
+      <div class="winter-discord-card" aria-live="polite">
+        <div class="wd-header">
+          <div class="wd-brand">
+            <span class="wd-discord-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028z"/>
+              </svg>
+            </span>
+            <div>
+              <div id="wdServerName" class="wd-server-name">Discord Community</div>
+              <div class="wd-sub">Winter Frost Widget</div>
+            </div>
+          </div>
+          <div id="wdOnlinePill" class="wd-online-pill">Syncing...</div>
+        </div>
+
+        <div class="wd-section-label">MEMBERS ONLINE</div>
+        <ul id="wdMembersList" class="wd-members-list">
+          <li class="wd-empty">Loading online members...</li>
+        </ul>
+
+        <div class="wd-footer">
+          <span class="wd-tagline">Hangout with people who get it</span>
+          <a id="wdJoinBtn" href="https://discord.com/invite/gzTwBqG2xK" target="_blank" rel="noopener noreferrer" class="wd-join-btn">
+            Join Server
+          </a>
+        </div>
+      </div>
     </div>
 
     <div class="section-box social-section">
@@ -79,7 +125,11 @@
       <p>Choose your favorite platform and be part of our growing community.</p>
       <div class="cta">
         <a href="https://beta.publishers.adsterra.com/referral/CB4xgSWYtJ" target="_blank" rel="noopener noreferrer" class="cta-button">
-          <img src="https://www.brandcolorcode.com/media/adsterra-logo.png" alt="Join Adsterra via Referral" class="cta-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-label="Join Adsterra via Referral" class="cta-icon">
+            <path d="M3 11l14-5v12L3 13v-2z"></path>
+            <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
+            <circle cx="19.5" cy="12" r="1.5" fill="#0284c7"></circle>
+          </svg>
           Adsterra
         </a>
         <a href="https://discord.com/invite/gzTwBqG2xK" target="_blank" rel="noopener noreferrer" class="cta-button">
@@ -103,6 +153,7 @@
           YouTube
         </a>
       </div>
+    </div>
 
     <div class="section-box faq-section">
       <h2>Frequently Asked Questions</h2>
