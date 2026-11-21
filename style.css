@@ -683,3 +683,80 @@ h1 {
   filter: brightness(1.08);
   transform: translateY(-1px);
 }
+
+/* Header biru es - anti tumpang tindih di layar sempit */
+.wd-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px;
+  background: linear-gradient(135deg, #0369a1 0%, #0284c7 55%, #0ea5e9 100%);
+  border-bottom: 1px solid rgba(186, 230, 253, 0.35);
+}
+
+.wd-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.wd-brand > div {
+  min-width: 0;
+  flex: 1;
+}
+
+.wd-server-name {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wd-sub {
+  font-size: 0.7rem;
+  color: #e0f2fe;
+  opacity: 0.92;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wd-online-pill {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: rgba(4, 15, 30, 0.42);
+  border: 1px solid rgba(224, 242, 254, 0.35);
+  padding: 4px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
+/* Penyesuaian ekstra di layar ponsel kecil */
+@media (max-width: 480px) {
+  .wd-header {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .wd-brand {
+    flex: 1 1 100%;
+  }
+
+  .wd-online-pill {
+    font-size: 0.7rem;
+    padding: 4px 10px;
+  }
+
+  .wd-activity {
+    max-width: 42%;
+    font-size: 0.7rem;
+  }
+}
