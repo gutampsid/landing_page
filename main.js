@@ -204,3 +204,118 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 });
+
+// Custom Winter Discord Widget Renderer (ID: 1019852867659632750)
+  const WINTER_GUILD_ID = '1019852867659632750';
+  const wdServerNameEl = document.getElementById('wdServerName');
+  const wdOnlinePillEl = document.getElementById('wdOnlinePill');
+  const wdMembersListEl = document.getElementById('wdMembersList');
+  const wdJoinBtnEl = document.getElementById('wdJoinBtn');
+
+  function createMemberRow(member) {
+    const li = document.createElement('li');
+    li.className = 'wd-member-item';
+
+    const left = document.createElement('div');
+    left.className = 'wd-member-left';
+
+    const avatarWrap = document.createElement('div');
+    avatarWrap.className = 'wd-avatar-wrap';
+
+    const img = document.createElement('img');
+    img.className = 'wd-avatar';
+    img.src = member.avatar_url;
+    img.alt = member.username || 'Member';
+    img.loading = 'lazy';
+
+    const status = ['online', 'idle', 'dnd'].includes(member.status) ? member.status : 'online';
+    const dot = document.createElement('span');
+    dot.className = `wd-status-dot ${status}`;
+
+    avatarWrap.appendChild(img);
+    avatarWrap.appendChild(dot);
+
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'wd-username';
+    nameSpan.textContent = member.username || 'Member';
+
+    left.appendChild(avatarWrap);
+    left.appendChild(nameSpan);
+    li.appendChild(left);
+
+    const activityName = member.game && member.game.name ? member.game.name : '';
+    if (activityName) {
+      const actSpan = document.createElement('span');
+      actSpan.className = 'wd-activity';
+      actSpan.textContent = activityName;
+      li.appendChild(actSpan);
+    }
+
+    return li;
+  }
+
+  async function renderWinterDiscordWidget() {
+    if (!wdMembersListEl) return;
+
+    try {
+      const res = await fetch(`https://discord.com/api/guilds/${WINTER_GUILD_ID}/widget.json`, {
+        cache: 'no-store'
+      });
+      if (!res.ok) throw new Error('Failed to load guild widget');
+
+      const data = await res.json();
+
+      if (data.name && wdServerNameEl) {
+        wdServerNameEl.textContent = data.name;
+      }
+
+      if (typeof data.presence_count === 'number') {
+        if (wdOnlinePillEl) {
+          wdOnlinePillEl.textContent = `${data.presence_count.toLocaleString('en-US')} Members Online`;
+        }
+        const statOnlineEl = document.getElementById('discordOnlineCount');
+        if (statOnlineEl) {
+          statOnlineEl.setAttribute('data-target', String(data.presence_count));
+          statOnlineEl.textContent = data.presence_count.toLocaleString('en-US');
+        }
+      }
+
+      if (data.instant_invite && wdJoinBtnEl) {
+        wdJoinBtnEl.href = data.instant_invite;
+      }
+
+      const members = Array.isArray(data.members) ? data.members : [];
+      wdMembersListEl.innerHTML = '';
+
+      if (members.length === 0) {
+        const emptyLi = document.createElement('li');
+        emptyLi.className = 'wd-empty';
+        emptyLi.textContent = 'Server is live, but individual member list is hidden.';
+        wdMembersListEl.appendChild(emptyLi);
+        return;
+      }
+
+      const fragment = document.createDocumentFragment();
+      members.forEach(member => {
+        fragment.appendChild(createMemberRow(member));
+      });
+      wdMembersListEl.appendChild(fragment);
+    } catch {
+      if (wdOnlinePillEl) wdOnlinePillEl.textContent = 'Live Sync Paused';
+      if (wdMembersListEl && !wdMembersListEl.children.length) {
+        const errLi = document.createElement('li');
+        errLi.className = 'wd-empty';
+        errLi.textContent = 'Unable to load live Discord members right now.';
+        wdMembersListEl.appendChild(errLi);
+      }
+    }
+  }
+
+  if (wdMembersListEl) {
+    renderWinterDiscordWidget();
+    setInterval(() => {
+      if (!document.hidden) {
+        renderWinterDiscordWidget();
+      }
+    }, 30000);
+  }
